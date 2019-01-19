@@ -9,6 +9,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ *
+ *
+ * Thanks to http://www.android-graphview.org/
+ *           https://www.ssaurel.com/blog/create-a-real-time-line-graph-in-android-with-graphview/
+ *           https://stackoverflow.com/questions/7394447/android-emulator-in-landscape-mode-screen-does-not-rotate
+ *           http://code.hootsuite.com/orientation-changes-on-android/
+ *
+ *           https://sourceforge.net/projects/jrandtest/ ????
+ *           https://github.com/stamfest/randomtests ????
+ *
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

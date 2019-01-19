@@ -2,7 +2,6 @@ package com.sevenorcas.johnnyapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.Viewport;
@@ -30,7 +29,7 @@ public class GraphActivity extends AppCompatActivity {
         vp.setMinX(0);
         vp.setMaxX(1000);
 
-        TrackerSimulation ts = new TrackerSimulation();
+        GraphActivityTracker ts = new GraphActivityTracker();
         for (int i=0;i<10;i++){
             series.appendData(new DataPoint(i, ts.getPoint()), true, 10);
         }

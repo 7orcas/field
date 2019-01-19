@@ -4,7 +4,7 @@ import android.graphics.Color;
 
 import java.util.Random;
 
-public class TrackerSimulation {
+public class GraphActivityTracker {
 
     private double rn;
     private Random rand = new Random();
