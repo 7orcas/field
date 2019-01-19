@@ -1,4 +1,4 @@
-package com.sevenorcas.johnnyapp;
+package com.sevenorcas.johnnyapp.wrapper;
 
 import android.app.Activity;
 import android.content.res.Configuration;
@@ -8,10 +8,12 @@ import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.sevenorcas.johnnyapp.R;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -19,7 +21,9 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class GraphWrapper {
 
+    private Activity activity;
     private State state;
+    private Config config;
     private boolean stop;
 
     /**
@@ -27,13 +31,15 @@ public class GraphWrapper {
      * Thanks to https://stackoverflow.com/questions/5112118/how-to-detect-orientation-of-android-device
      *
      * @param activity
-     * @param graph state (can be null)
+     * @param graphWrapperState (can be null)
      */
     public GraphWrapper(@NotNull Activity activity, State graphWrapperState) {
 
-System.out.println("...state is " + (graphWrapperState==null?"null":"instantiated"));
+        log("state is " + (graphWrapperState==null?"null":"instantiated"));
 
+        this.activity = activity;
         state = graphWrapperState != null? graphWrapperState : new State();
+        config = new Config();
         stop = false;
 
         GraphView g = (GraphView) activity.findViewById(R.id.graph);
@@ -63,6 +69,36 @@ System.out.println("...state is " + (graphWrapperState==null?"null":"instantiate
     }
 
     /**
+     * Trial Run of Random Numbers
+     */
+    public void runTrial() {
+        // we add 100 new entries
+        for (int i = 0; i < config.runsPerTrail; i++) {
+            if (isStop()){
+                log("trial run stopped");
+                return;
+            }
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    addEntry();
+                }
+            });
+
+            // sleep to slow down the add of entries
+            try {
+                Thread.sleep(state.sampleMS);
+            } catch (InterruptedException e) {
+                // manage error ...
+            }
+        }
+        log("finished run");
+    }
+
+
+
+    /**
      * Add random data to graph
      *
      * Thanks to https://codereview.stackexchange.com/questions/146034/testing-a-random-number-generator
@@ -80,13 +116,9 @@ System.out.println("...state is " + (graphWrapperState==null?"null":"instantiate
     }
 
 
-    public int getSampleMilliseconds() {
-        return state.sampleMS;
-    }
-
-    public State getStateAndStop() {
+    public String getStateAsStringAndStop() {
         stop = true;
-        return state;
+        return state.serialize();
     }
 
     public void setState(State state) {
@@ -97,22 +129,14 @@ System.out.println("...state is " + (graphWrapperState==null?"null":"instantiate
         return stop;
     }
 
-    /**
-     * Convenience class to store the graph's state
-     */
-    public class State implements Serializable{
-        private LineGraphSeries<DataPoint> series;
-        private int maxX;
-        private int lastX;
-        private int sampleMS;
-
-        public State() {
-            series = new LineGraphSeries<DataPoint>();
-            maxX = 30; //Default (Portrait)
-            lastX = 0;
-            sampleMS = 300;
-        }
+    static protected void log(String m){
+        System.out.println("..." + m);
     }
+
+    static public State getState (String s){
+        return State.deserialize(s);
+    }
+
 
 
 }

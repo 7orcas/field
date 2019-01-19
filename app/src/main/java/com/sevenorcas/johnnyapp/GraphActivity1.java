@@ -3,7 +3,9 @@ package com.sevenorcas.johnnyapp;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.sevenorcas.johnnyapp.GraphWrapper.State;
+import com.sevenorcas.johnnyapp.wrapper.GraphWrapper;
+import com.sevenorcas.johnnyapp.wrapper.State;
+
 
 /**
  *
@@ -25,13 +27,13 @@ System.out.println("...onCreate called");
 
 
         // If we have a saved state then we can restore it now
-        State state = null;
+        State s = null;
         if (savedInstanceState != null) {
-            System.out.println("...returning from saved state");
-            state = (State)savedInstanceState.getSerializable(GRAPH_STATE);
+System.out.println("...returning from saved state");
+            s = GraphWrapper.getState(savedInstanceState.getString(GRAPH_STATE));
         }
 
-        gw = new GraphWrapper(this, state);
+        gw = new GraphWrapper(this, s);
     }
 
     @Override
@@ -42,32 +44,9 @@ System.out.println("...onResume called");
 
         // we're going to simulate real time with thread that append data to the graph
         new Thread(new Runnable() {
-
             @Override
             public void run() {
-                // we add 100 new entries
-                for (int i = 0; i < 50; i++) {
-                    if (gw.isStop()){
-System.out.println("...run stopped");
-                        return;
-                    }
-
-                    runOnUiThread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            gw.addEntry();
-                        }
-                    });
-
-                    // sleep to slow down the add of entries
-                    try {
-                        Thread.sleep(gw.getSampleMilliseconds());
-                    } catch (InterruptedException e) {
-                        // manage error ...
-                    }
-                }
-System.out.println("...finished run");
+                gw.runTrial();
             }
         }).start();
     }
@@ -77,7 +56,7 @@ System.out.println("...finished run");
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // Stop wrapper and save state
-        outState.putSerializable(GRAPH_STATE, gw.getStateAndStop());
+        outState.putString(GRAPH_STATE, gw.getStateAsStringAndStop());
     }
 
 }
