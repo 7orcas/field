@@ -17,23 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="DadActivity"
-            android:label="@string/app_name">
-        </activity>
-        <activity
-            android:name="MumActivity"
-            android:label="@string/app_name">
-        </activity>
-        <activity
-            android:name="IsabellaActivity"
-            android:label="@string/app_name">
-        </activity>
-        <activity
-            android:name="GraphActivity"
-            android:label="@string/app_name">
-        </activity>
-        <activity
-            android:name="GraphActivity1"
+            android:name=".GraphActivity"
             android:label="@string/app_name">
         </activity>
     </application>

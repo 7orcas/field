@@ -1,38 +1,64 @@
 package com.sevenorcas.johnnyapp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.Viewport;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+import com.sevenorcas.johnnyapp.wrapper.GraphWrapper;
+import com.sevenorcas.johnnyapp.wrapper.State;
 
-public class GraphActivity extends AppCompatActivity {
+
+/**
+ *
+ * Thanks to https://www.ssaurel.com/blog/create-a-real-time-line-graph-in-android-with-graphview/
+ */
+public class GraphActivity extends Activity {
+
+    private static final String GRAPH_STATE = "com.sevenorcas.johnnyapp.graphstate";
+
+    private GraphWrapper gw;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-//                new DataPoint(0, 1),
-//                new DataPoint(1, 0),
-//                new DataPoint(2, 0),
-//                new DataPoint(3, 1),
-//                new DataPoint(4, 0)
-        });
-        graph.addSeries(series);
-
-        Viewport vp = graph.getViewport();
-        vp.setXAxisBoundsManual(true);
-        vp.setMinX(0);
-        vp.setMaxX(1000);
-
-        GraphActivityTracker ts = new GraphActivityTracker();
-        for (int i=0;i<10;i++){
-            series.appendData(new DataPoint(i, ts.getPoint()), true, 10);
+        String s = null;
+        if (savedInstanceState != null) {
+            s = savedInstanceState.getString(GRAPH_STATE);
         }
 
+        gw = new GraphWrapper(this, s);
+
+        final Button stopBtn = findViewById(R.id.stopBtn);
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                gw.stop();
+            }
+        });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                gw.runTrial();
+            }
+        }).start();
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Save state
+        outState.putString(GRAPH_STATE, gw.getStateAsStringAndStop());
+    }
+
 }
+

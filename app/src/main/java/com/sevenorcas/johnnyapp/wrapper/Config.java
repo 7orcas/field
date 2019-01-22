@@ -4,9 +4,11 @@ package com.sevenorcas.johnnyapp.wrapper;
  * Convenience class to store <b>this</b> app's configuration
  */
 public class Config {
-    protected int runsPerTrail;
+    /** Number random numbers generated per data point   */ protected int rngPerRun;
+    /** Sampling delay (milli seconds)                   */ protected int delayMS;
 
     protected Config() {
-        runsPerTrail = 50;
+        rngPerRun = 10000;
+        delayMS = 1000 * 60;
     }
 }
