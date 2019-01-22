@@ -9,6 +9,6 @@ public class Config {
 
     protected Config() {
         rngPerRun = 10000;
-        delayMS = 1000 * 60;
+        delayMS = 1000 * 30;
     }
 }

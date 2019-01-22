@@ -3,6 +3,7 @@ package com.sevenorcas.johnnyapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -58,6 +59,16 @@ public class GraphActivity extends Activity {
         super.onSaveInstanceState(outState);
         // Save state
         outState.putString(GRAPH_STATE, gw.getStateAsStringAndStop());
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (gw != null){
+                gw.stop();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

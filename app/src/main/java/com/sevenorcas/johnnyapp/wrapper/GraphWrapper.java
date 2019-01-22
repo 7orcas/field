@@ -50,7 +50,7 @@ public class GraphWrapper {
         GridLabelRenderer r = g.getGridLabelRenderer();
         r.setNumVerticalLabels(3);
         r.setVerticalAxisTitle("Average RN's");
-        r.setHorizontalAxisTitle("Time/min");
+        r.setHorizontalAxisTitle("Time / half mins");
         r.setPadding(48);
 
         config = new Config();
@@ -116,7 +116,7 @@ public class GraphWrapper {
 
 
     public String getStateAsStringAndStop() {
-        stop = true;
+//        stop = true;
         return state.serialize();
     }
 
