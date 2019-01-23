@@ -1,4 +1,4 @@
-package com.sevenorcas.johnnyapp;
+package com.sevenorcas.field.graph;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,19 +7,19 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.sevenorcas.johnnyapp.wrapper.GraphWrapper;
-import com.sevenorcas.johnnyapp.wrapper.State;
+import com.sevenorcas.field.R;
+import com.sevenorcas.field.graph.wrapper.Config;
+import com.sevenorcas.field.graph.wrapper.Wrapper;
+import com.sevenorcas.field.graph.wrapper.GraphI;
+import com.sevenorcas.field.result.ResultActivity;
 
 
 /**
- *
- * Thanks to https://www.ssaurel.com/blog/create-a-real-time-line-graph-in-android-with-graphview/
+ * Start a trial run
  */
-public class GraphActivity extends Activity {
+public class GraphActivity extends Activity implements GraphI {
 
-    private static final String GRAPH_STATE = "com.sevenorcas.johnnyapp.graphstate";
-
-    private GraphWrapper gw;
+    private Wrapper wrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +27,20 @@ public class GraphActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
-        String s = null;
+        final Config config = new Config();
+        wrapper = new Wrapper(this, config);
         if (savedInstanceState != null) {
-            s = savedInstanceState.getString(GRAPH_STATE);
+            wrapper.deserialize(savedInstanceState.getString(GRAPH_STATE));
         }
-
-        gw = new GraphWrapper(this, s);
 
         final Button stopBtn = findViewById(R.id.stopBtn);
         stopBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                gw.stop();
+                wrapper.stop();
+                Intent i = new Intent(GraphActivity.this, ResultActivity.class);
+                i.putExtra(GRAPH_RESULT, wrapper.getStateAsString());
+                i.putExtra(GRAPH_CONFIG, config.getConfigAsString());
+                startActivity(i);
             }
         });
     }
@@ -48,7 +51,7 @@ public class GraphActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                gw.runTrial();
+                wrapper.runTrial();
             }
         }).start();
     }
@@ -58,14 +61,14 @@ public class GraphActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // Save state
-        outState.putString(GRAPH_STATE, gw.getStateAsStringAndStop());
+        outState.putString(GRAPH_STATE, wrapper.getStateAsString());
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (gw != null){
-                gw.stop();
+            if (wrapper != null){
+                wrapper.stop();
             }
         }
         return super.onKeyDown(keyCode, event);

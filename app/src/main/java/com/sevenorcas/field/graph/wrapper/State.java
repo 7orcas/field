@@ -1,16 +1,15 @@
-package com.sevenorcas.johnnyapp.wrapper;
+package com.sevenorcas.field.graph.wrapper;
 
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * Convenience class to store the graph's state
  */
-public class State implements GraphI{
+public class State extends Base implements GraphI {
 
     protected Config config;
     protected LineGraphSeries<DataPoint> series;
@@ -29,31 +28,25 @@ public class State implements GraphI{
 
 
     /**
-     * Serialize <b>this</b> object to a <code>String</code>
+     * Encode <b>this</b> object to a <code>String</code>
      * @return
      */
-    protected String serialize(){
+    protected String encode(){
         StringBuffer sb = new StringBuffer();
-        sb.append(serializeField(STATE_MAX, maxX));
-        sb.append(serializeField(STATE_LAST, lastX,true));
+
+        encodeField(STATE_MAX, maxX, sb);
+        encodeField(STATE_LAST, lastX, sb);
 
         StringBuffer sbx = new StringBuffer();
-        for (int i=0;i<dataPoints.size();i++){
-            DataPoint d = dataPoints.get(i);
-            sbx.append((i!=0? STATE_DELIMIT_3 : "") + d.getY());
+        for (DataPoint d : dataPoints){
+            encodeList(d.getY(), sbx);
         }
-        sb.append(serializeField(STATE_DATA_POINTS, sbx.toString(),true));
+        encodeField(STATE_DATA_POINTS, sbx.toString(), sb);
 
-        GraphWrapper.log("state serialize: " + sb.toString());
+        Wrapper.log("state encode: " + sb.toString());
         return sb.toString();
     }
 
-    private String serializeField(String key, Object value){
-        return serializeField(key, value, false);
-    }
-    private String serializeField(String key, Object value, boolean delimiter){
-        return (delimiter?STATE_DELIMIT_1:"") + key + STATE_DELIMIT_2 + value;
-    }
 
 
     private String toStringX(){
@@ -69,31 +62,25 @@ public class State implements GraphI{
     }
 
 
-    protected void deserialize(String s){
+    protected void decode(String s){
 
         if (s == null || s.isEmpty()){
-            GraphWrapper.log("state deserialize: " + (s == null?"null" : "empty"));
+            Wrapper.log("state decode: " + (s == null?"null" : "empty"));
             return;
         }
 
-        String[] sx = s.split(STATE_DELIMIT_1);
         String dps = null;
-        for (int i=0; i<sx.length; i++){
-            String[] sx1 = sx[i].split(STATE_DELIMIT_2);
-            String k = sx1[0];
-            String v = sx1[1];
-
-            if (k.equals(STATE_DATA_POINTS) && v.length()>0){
-                dps = v;
-            }
-            else if (k.equals(STATE_LAST)){
-                lastX = Integer.parseInt(v);
-            }
+        try {
+            super.decode(s);
+            lastX     = getField(STATE_LAST, lastX);
+            dps       = getField(STATE_DATA_POINTS, "");
+        } catch (Exception x){
+            Wrapper.log("Exception: " + x.getMessage());
         }
 
         //add data points last
-        if (dps != null) {
-            String[] sx2 = dps.split("\\" + STATE_DELIMIT_3);
+        if (dps != null && dps.length()>0) {
+            String[] sx2 = dps.split("\\" + DELIMIT_3);
             for (int i=0; i<sx2.length; i++){
                 DataPoint dp = new DataPoint(i, Double.parseDouble(sx2[i]));
                 dataPoints.add(dp);
@@ -101,7 +88,7 @@ public class State implements GraphI{
             }
         }
 
-        GraphWrapper.log("state deserialize: " + toStringX());
+        Wrapper.log("state decode: " + toStringX());
     }
 
     protected void addDataPoint (DataPoint dp){
@@ -110,5 +97,7 @@ public class State implements GraphI{
         lastX++;
     }
 
-
+    public void setMaxX(int maxX) {
+        this.maxX = maxX;
+    }
 }

@@ -1,4 +1,4 @@
-package com.sevenorcas.johnnyapp;
+package com.sevenorcas.field;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

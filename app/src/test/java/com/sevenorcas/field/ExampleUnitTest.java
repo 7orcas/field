@@ -1,4 +1,4 @@
-package com.sevenorcas.johnnyapp;
+package com.sevenorcas.field;
 
 import org.junit.Test;
 

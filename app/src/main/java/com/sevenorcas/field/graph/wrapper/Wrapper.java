@@ -1,4 +1,4 @@
-package com.sevenorcas.johnnyapp.wrapper;
+package com.sevenorcas.field.graph.wrapper;
 
 import android.app.Activity;
 import android.content.res.Configuration;
@@ -7,7 +7,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
-import com.sevenorcas.johnnyapp.R;
+import com.sevenorcas.field.R;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * <i>GraphView</i> wrapper with <b>this</b> app's settings
  */
-public class GraphWrapper {
+public class Wrapper {
 
     private Activity activity;
     private State state;
@@ -24,36 +24,33 @@ public class GraphWrapper {
     private boolean stop;
 
     /**
-     *
-     * Thanks to https://stackoverflow.com/questions/5112118/how-to-detect-orientation-of-android-device
+     * Graph wrapper with data and methods
      *
      * @param activity
-     * @param graphState (can be null)
+     * @param config
      */
-    public GraphWrapper(@NotNull Activity activity, String graphState) {
-
-        log("state is " + (graphState==null?"null":"instantiated"));
+    public Wrapper(@NotNull Activity activity, Config config) {
 
         this.activity = activity;
+        this.config = config;
         GraphView g = (GraphView) activity.findViewById(R.id.graph);
 
         // customize viewport
         Viewport vp = g.getViewport();
         vp.setYAxisBoundsManual(true);
         vp.setXAxisBoundsManual(true);
-        vp.setMinY(0);
-        vp.setMaxY(1);
-        vp.setMinX(1);
+        vp.setMinY(config.minY);
+        vp.setMaxY(config.maxY);
+        vp.setMinX(config.minX);
         vp.setScrollable(true);
 
         // customize y axis grid
         GridLabelRenderer r = g.getGridLabelRenderer();
-        r.setNumVerticalLabels(3);
+        r.setNumVerticalLabels(5);
         r.setVerticalAxisTitle("Average RN's");
         r.setHorizontalAxisTitle("Time / half mins");
         r.setPadding(48);
 
-        config = new Config();
         stop = false;
         state = new State(config);
 
@@ -62,11 +59,17 @@ public class GraphWrapper {
         }
         g.addSeries(state.series);
         vp.setMaxX(state.maxX);
-
-        if (graphState != null){
-            state.deserialize(graphState);
-        }
     }
+
+    /**
+     * Deserialise the passed in graph state
+     *
+     * @param graphState
+     */
+    public void deserialize(String graphState){
+        state.decode(graphState);
+    }
+
 
     /**
      * Trial Run of Random Numbers
@@ -115,9 +118,8 @@ public class GraphWrapper {
     }
 
 
-    public String getStateAsStringAndStop() {
-//        stop = true;
-        return state.serialize();
+    public String getStateAsString() {
+        return state.encode();
     }
 
     public void setState(State state) {
@@ -139,5 +141,7 @@ public class GraphWrapper {
         System.out.println("..." + m);
     }
 
-
+    public State getState() {
+        return state;
+    }
 }

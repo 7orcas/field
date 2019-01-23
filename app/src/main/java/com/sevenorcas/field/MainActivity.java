@@ -1,10 +1,12 @@
-package com.sevenorcas.johnnyapp;
+package com.sevenorcas.field;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.sevenorcas.field.graph.GraphActivity;
 
 /**
  *
@@ -16,6 +18,7 @@ import android.widget.Button;
  *           https://stackoverflow.com/questions/30279536/graphview-how-to-show-x-axis-label
  *           https://stackoverflow.com/questions/36231032/android-graph-view-y-axis-numbers-being-cut-out
  *           https://stackoverflow.com/questions/3614849/intercepting-the-back-button
+ *           https://stackoverflow.com/questions/5112118/how-to-detect-orientation-of-android-device
  *
  *           https://sourceforge.net/projects/jrandtest/ ????
  *           https://github.com/stamfest/randomtests ????
