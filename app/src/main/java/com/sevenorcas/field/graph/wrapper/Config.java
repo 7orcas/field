@@ -28,6 +28,13 @@ public class Config extends Base{
     public boolean isSeconds(){
         return delayMS == 1000;
     }
+    public Config set30Seconds(){
+        delayMS = 1000 * 30;
+        return this;
+    }
+    public boolean is30Seconds(){
+        return delayMS == 1000 * 30;
+    }
     public Config setMinutes(){
         delayMS = 1000 * 60;
         return this;

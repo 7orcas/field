@@ -65,6 +65,9 @@ public class Wrapper {
         if (config.isSeconds()){
             l += " (" + activity.getResources().getString(R.string.per_second) + ")";
         }
+        else if (config.is30Seconds()){
+            l += " (" + activity.getResources().getString(R.string.per_second_30) + ")";
+        }
         else if (config.isMinutes()){
             l += " (" + activity.getResources().getString(R.string.per_minute) + ")";
         }

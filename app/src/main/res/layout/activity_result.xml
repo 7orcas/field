@@ -20,18 +20,6 @@
         android:layout_marginEnd="30dp" />
 
     <EditText
-        android:id="@+id/minYTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="270dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Min Y" />
-
-    <EditText
         android:id="@+id/maxYTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,6 +27,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
+        android:editable="false"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Max Y" />
@@ -51,6 +40,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="270dp"
         android:layout_toEndOf="@+id/minYTxt"
+        android:editable="false"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="min" />
@@ -63,6 +53,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/minYTxt"
+        android:editable="false"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="max" />
@@ -73,10 +64,27 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/maxYTxt"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="124dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="125dp"
         android:text="Save" />
+
+    <EditText
+        android:id="@+id/minYTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="270dp"
+        android:editable="false"
+        android:ems="10"
+        android:enabled="true"
+        android:inputType="text"
+        android:text="Min Y"
+        tools:editable="false" />
 
 
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.sevenorcas.field.graph.GraphActivity;
 
@@ -19,6 +20,7 @@ import com.sevenorcas.field.graph.GraphActivity;
  *           https://stackoverflow.com/questions/36231032/android-graph-view-y-axis-numbers-being-cut-out
  *           https://stackoverflow.com/questions/3614849/intercepting-the-back-button
  *           https://stackoverflow.com/questions/5112118/how-to-detect-orientation-of-android-device
+ *           https://stackoverflow.com/questions/7493287/android-how-do-i-get-string-from-resources-using-its-name
  *
  *           https://sourceforge.net/projects/jrandtest/ ????
  *           https://github.com/stamfest/randomtests ????
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setLabel (R.id.startTxt, getResources().getString(R.string.start_label));
+
         Button graphBtn = findViewById(R.id.graphBtn);
         graphBtn.setText(getResources().getString(R.string.start));
         graphBtn.setOnClickListener(new View.OnClickListener() {
@@ -40,5 +44,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    private void setLabel(int id, String sting){
+        TextView txt = findViewById(id);
+        txt.setText(sting);
+        txt.setFocusable(false);
     }
 }
