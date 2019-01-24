@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button graphBtn = findViewById(R.id.graphBtn);
+        Button graphBtn = findViewById(R.id.graphBtn);
+        graphBtn.setText(getResources().getString(R.string.start));
         graphBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, GraphActivity.class));

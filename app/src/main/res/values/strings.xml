@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Field Tracker</string>
+
+    <string name="axis_y_label">Average RNs</string>
+    <string name="axis_x_label">Trail Runs</string>
+    <string name="per_second">per second</string>
+    <string name="per_minute">per minute</string>
+
+    <string name="min_y">Min Ave RN</string>
+    <string name="max_y">Max Ave RN</string>
+
+    <string name="start">Start RN trails</string>
+    <string name="stop">Stop</string>
+    <string name="save">Save Graph</string>
 </resources>

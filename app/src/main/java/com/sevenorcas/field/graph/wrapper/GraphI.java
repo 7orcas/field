@@ -12,6 +12,8 @@ public interface GraphI {
     final static public String STATE_MAX          = "mx";
     final static public String STATE_LAST         = "lx";
     final static public String STATE_DATA_POINTS  = "dp";
+    final static public String STATE_MIN_Y        = "x1";
+    final static public String STATE_MAX_Y        = "x2";
 
     final static public String CONFIG_RNG_PER_RUN = "c1";
     final static public String CONFIG_DEPLAY_MS   = "c2";

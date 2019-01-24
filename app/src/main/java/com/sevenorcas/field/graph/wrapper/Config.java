@@ -14,11 +14,26 @@ public class Config extends Base{
 
     public Config() {
         rngPerRun = 1000;
-        delayMS = 1000;// * 30;
+        delayMS = 1000 * 30;
 
         minY = 0.4;
         maxY = 0.6;
         minX = 1;
+    }
+
+    public Config setSeconds(){
+        delayMS = 1000;
+        return this;
+    }
+    public boolean isSeconds(){
+        return delayMS == 1000;
+    }
+    public Config setMinutes(){
+        delayMS = 1000 * 60;
+        return this;
+    }
+    public boolean isMinutes(){
+        return delayMS == 1000 * 60;
     }
 
     private String toStringX(){

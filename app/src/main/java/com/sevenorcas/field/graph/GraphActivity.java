@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.sevenorcas.field.R;
 import com.sevenorcas.field.graph.wrapper.Config;
+import com.sevenorcas.field.graph.wrapper.State;
 import com.sevenorcas.field.graph.wrapper.Wrapper;
 import com.sevenorcas.field.graph.wrapper.GraphI;
 import com.sevenorcas.field.result.ResultActivity;
@@ -27,10 +28,14 @@ public class GraphActivity extends Activity implements GraphI {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
-        final Config config = new Config();
+        final Config config = new Config().setSeconds();
         wrapper = new Wrapper(this, config);
+        State state = wrapper.getState();
+        wrapper.createGraph(state.getMaxX()).addSeries(wrapper.getSeries());
+
         if (savedInstanceState != null) {
-            wrapper.deserialize(savedInstanceState.getString(GRAPH_STATE));
+            wrapper.deserialize(savedInstanceState.getString(GRAPH_STATE))
+                   .appendAllDataPoints();
         }
 
         final Button stopBtn = findViewById(R.id.stopBtn);
