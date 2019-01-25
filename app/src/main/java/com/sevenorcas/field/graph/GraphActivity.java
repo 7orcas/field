@@ -28,7 +28,7 @@ public class GraphActivity extends Activity implements GraphI {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
-        final Config config = new Config().set30Seconds();
+        final Config config = new Config().setSeconds();
         wrapper = new Wrapper(this, config);
         State state = wrapper.getState();
         wrapper.createGraph(state.getMaxX()).addSeries(wrapper.getSeries());
@@ -44,7 +44,7 @@ public class GraphActivity extends Activity implements GraphI {
                 wrapper.stop();
                 Intent i = new Intent(GraphActivity.this, ResultActivity.class);
                 i.putExtra(GRAPH_RESULT, wrapper.getStateAsString());
-                i.putExtra(GRAPH_CONFIG, config.getConfigAsString());
+                i.putExtra(GRAPH_CONFIG, config.encode());
                 startActivity(i);
             }
         });

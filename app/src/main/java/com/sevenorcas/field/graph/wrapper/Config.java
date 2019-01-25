@@ -54,10 +54,10 @@ public class Config extends Base{
     }
 
     /**
-     * Serialize <b>this</b> object to a <code>String</code>
+     * Encode <b>this</b> object to a <code>String</code>
      * @return
      */
-    public String getConfigAsString(){
+    public String encode(){
         StringBuffer sb = new StringBuffer();
         encodeField(CONFIG_RNG_PER_RUN, rngPerRun, sb);
         encodeField(CONFIG_DEPLAY_MS, delayMS, sb);

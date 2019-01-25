@@ -35,7 +35,7 @@ public class State extends Base implements GraphI {
      * Encode <b>this</b> object to a <code>String</code>
      * @return
      */
-    protected String encode(){
+    public String encode(){
         StringBuffer sb = new StringBuffer();
 
         encodeField(STATE_MAX, maxX, sb);
