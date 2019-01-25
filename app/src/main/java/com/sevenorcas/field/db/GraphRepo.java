@@ -11,8 +11,7 @@ import com.sevenorcas.field.graph.wrapper.State;
 import java.util.Date;
 import java.util.List;
 
-public class GraphRepo {
-    private String DB_NAME = "db_app";
+public class GraphRepo implements DbI {
 
     private AppDatabase appDatabase;
 

@@ -60,18 +60,7 @@ public class Wrapper {
         GridLabelRenderer r = g.getGridLabelRenderer();
         r.setNumVerticalLabels(5);
         r.setVerticalAxisTitle(activity.getResources().getString(R.string.axis_y_label));
-
-        String l = activity.getResources().getString(R.string.axis_x_label);
-        if (config.isSeconds()){
-            l += " (" + activity.getResources().getString(R.string.per_second) + ")";
-        }
-        else if (config.is30Seconds()){
-            l += " (" + activity.getResources().getString(R.string.per_second_30) + ")";
-        }
-        else if (config.isMinutes()){
-            l += " (" + activity.getResources().getString(R.string.per_minute) + ")";
-        }
-        r.setHorizontalAxisTitle(l);
+        r.setHorizontalAxisTitle(activity.getResources().getString(R.string.axis_x_label));
 
         r.setPadding(48);
 

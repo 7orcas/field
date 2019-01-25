@@ -104,7 +104,7 @@ public class State extends Base implements GraphI {
     public void appendAllDataPoints(){
         for (int i=0; i<dataPoints.size(); i++){
             DataPoint dp = dataPoints.get(i);
-            series.appendData(dp, i > maxX ? true : false, maxX);
+            series.appendData(dp, i > maxX, maxX);
         }
     }
 
@@ -119,7 +119,7 @@ public class State extends Base implements GraphI {
 
     protected void addDataPoint (DataPoint dp){
         dataPoints.add(dp);
-        series.appendData(dp, lastX > maxX ? true : false, maxX);
+        series.appendData(dp, lastX > maxX, maxX);
         lastX++;
 
         if (minY == -1 || dp.getY() < minY){
@@ -157,4 +157,9 @@ public class State extends Base implements GraphI {
     protected LineGraphSeries<DataPoint> getSeries() {
         return series;
     }
+
+    public int getDuration(){
+        return lastX * config.delayFactor;
+    }
+
 }

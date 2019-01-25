@@ -32,6 +32,7 @@ import com.sevenorcas.field.list.ListActivity;
  *           Database
  *           https://developer.android.com/training/data-storage/room/referencing-data
  *           https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
+ *           https://stackoverflow.com/questions/44167111/android-room-simple-select-query-cannot-access-database-on-the-main-thread
  *
  *           ToolBar
  *           https://developer.android.com/training/appbar/
