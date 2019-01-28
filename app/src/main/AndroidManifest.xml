@@ -26,7 +26,7 @@
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name="com.sevenorcas.field.list.ListActivity"
+            android:name="com.sevenorcas.field.list.ListActivityX"
             android:label="@string/app_name">
         </activity>
     </application>

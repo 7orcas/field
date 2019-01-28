@@ -1,27 +1,19 @@
 package com.sevenorcas.field.result;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.sevenorcas.field.BaseActivity;
 import com.sevenorcas.field.MainActivity;
 import com.sevenorcas.field.R;
-import com.sevenorcas.field.db.AppDatabase;
 import com.sevenorcas.field.db.GraphRepo;
-import com.sevenorcas.field.graph.GraphActivity;
 import com.sevenorcas.field.graph.wrapper.Config;
 import com.sevenorcas.field.graph.wrapper.GraphI;
 import com.sevenorcas.field.graph.wrapper.State;
-import com.sevenorcas.field.graph.wrapper.Wrapper;
+import com.sevenorcas.field.graph.wrapper.GraphWrapper;
 
 
 /**
@@ -40,10 +32,10 @@ public class ResultActivity extends BaseActivity implements GraphI {
         final Config config = new Config();
         config.decode((String)getIntent().getSerializableExtra(GRAPH_CONFIG));
 
-        Wrapper wrapper = new Wrapper(this, config);
-        wrapper.deserialize((String)getIntent().getSerializableExtra(GRAPH_RESULT));
+        GraphWrapper wrapper = new GraphWrapper(config);
+        wrapper.deserialize((String)getIntent().getSerializableExtra(GRAPH_RESULT), (String)getIntent().getSerializableExtra(GRAPH_DATA));
         final State state = wrapper.getState();
-        wrapper.createGraph(state.getLastX()).addSeries(state.addAllDataPoints());
+        wrapper.createGraph(this).addSeries(state.addAllDataPoints());
 
         setLabel(R.id.descrTxt, R.string.descr);
         setLabel(R.id.descrTxtV, "" + config.getDescription());

@@ -5,16 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.sevenorcas.field.graph.GraphActivity;
-import com.sevenorcas.field.list.ListActivity;
+import com.sevenorcas.field.list.ListActivityX;
 
 /**
  *
@@ -33,11 +31,14 @@ import com.sevenorcas.field.list.ListActivity;
  *           https://developer.android.com/training/data-storage/room/referencing-data
  *           https://android.jlelse.eu/5-steps-to-implement-room-persistence-library-in-android-47b10cd47b24
  *           https://stackoverflow.com/questions/44167111/android-room-simple-select-query-cannot-access-database-on-the-main-thread
+ *           https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
  *
  *           ToolBar
  *           https://developer.android.com/training/appbar/
  *           https://medium.com/@101/android-toolbar-for-appcompatactivity-671b1d10f354
  *
+ *           Observers
+ *           https://medium.com/@MinaSamy/android-architecture-components-lifecycle-433ace1ec05d
  *
  *           https://sourceforge.net/projects/jrandtest/ ????
  *           https://github.com/stamfest/randomtests ????
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
-            startActivity(new Intent(MainActivity.this, ListActivity.class));
+            startActivity(new Intent(MainActivity.this, ListActivityX.class));
             return true;
         }
 

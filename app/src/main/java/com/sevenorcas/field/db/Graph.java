@@ -14,7 +14,8 @@ public class Graph {
     private Date created;
 
     private String config;
-    private String state;
+    private String result;
+    private String data;
     private String descr;
     private int participants;
 
@@ -49,12 +50,20 @@ public class Graph {
         this.config = config;
     }
 
-    public String getState() {
-        return state;
+    public String getResult() {
+        return result;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     public String getDescr() {

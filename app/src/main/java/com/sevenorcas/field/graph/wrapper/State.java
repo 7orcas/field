@@ -32,10 +32,10 @@ public class State extends Base implements GraphI {
 
 
     /**
-     * Encode <b>this</b> object to a <code>String</code>
+     * Encode <b>this</b> object result parameters to a <code>String</code>
      * @return
      */
-    public String encode(){
+    public String encodeResult(){
         StringBuffer sb = new StringBuffer();
 
         encodeField(STATE_MAX, maxX, sb);
@@ -43,16 +43,24 @@ public class State extends Base implements GraphI {
         encodeField(STATE_MIN_Y, minY, sb);
         encodeField(STATE_MAX_Y, maxY, sb);
 
+        return sb.toString();
+    }
+
+    /**
+     * Encode <b>this</b> object data to a <code>String</code>
+     * @return
+     */
+    public String encodeData(){
         StringBuffer sbx = new StringBuffer();
         for (DataPoint d : dataPoints){
             encodeList(d.getY(), sbx);
         }
+
+        StringBuffer sb = new StringBuffer();
         encodeField(STATE_DATA_POINTS, sbx.toString(), sb);
 
-        Wrapper.log("state encode: " + sb.toString());
         return sb.toString();
     }
-
 
 
     private String toStringX(){
@@ -70,22 +78,32 @@ public class State extends Base implements GraphI {
     }
 
 
-    protected void decode(String s){
-
+    protected void decodeResult(String s){
         if (s == null || s.isEmpty()){
-            Wrapper.log("state decode: " + (s == null?"null" : "empty"));
+            return;
+        }
+
+        try {
+            super.decode(s);
+            lastX     = getField(STATE_LAST, lastX);
+            minY      = getField(STATE_MIN_Y, minY);
+            maxY      = getField(STATE_MAX_Y, maxY);
+        } catch (Exception x){
+            GraphWrapper.log("Exception: " + x.getMessage());
+        }
+    }
+
+    protected void decodeData(String s){
+        if (s == null || s.isEmpty()){
             return;
         }
 
         String dps = null;
         try {
             super.decode(s);
-            lastX     = getField(STATE_LAST, lastX);
             dps       = getField(STATE_DATA_POINTS, "");
-            minY      = getField(STATE_MIN_Y, minY);
-            maxY      = getField(STATE_MAX_Y, maxY);
         } catch (Exception x){
-            Wrapper.log("Exception: " + x.getMessage());
+            GraphWrapper.log("Exception: " + x.getMessage());
         }
 
         //add data points last
@@ -94,12 +112,10 @@ public class State extends Base implements GraphI {
             for (int i=0; i<sx2.length; i++){
                 DataPoint dp = new DataPoint(i, Double.parseDouble(sx2[i]));
                 dataPoints.add(dp);
-//                series.appendData(dp, i > maxX ? true : false, maxX);
             }
         }
-
-        Wrapper.log("state decode: " + toStringX());
     }
+
 
     public void appendAllDataPoints(){
         for (int i=0; i<dataPoints.size(); i++){

@@ -1,40 +1,29 @@
 package com.sevenorcas.field.list;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.sevenorcas.field.BaseActivity;
 import com.sevenorcas.field.R;
-import com.sevenorcas.field.db.AppDatabase;
 import com.sevenorcas.field.db.Graph;
 import com.sevenorcas.field.db.GraphRepo;
-import com.sevenorcas.field.graph.GraphActivity;
-import com.sevenorcas.field.graph.wrapper.Config;
 import com.sevenorcas.field.graph.wrapper.GraphI;
-import com.sevenorcas.field.graph.wrapper.State;
-import com.sevenorcas.field.graph.wrapper.Wrapper;
 import com.sevenorcas.field.result.ResultActivity;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 
 /**
  * Display a trial run result
  */
-public class ListActivity extends BaseActivity implements GraphI {
+public class ListActivityX extends Activity implements GraphI {
 
     private ListView listView;
-    private ListActivity thisObject;
+    private ListActivityX thisObject;
     private List<Graph> list;
 
     @Override
@@ -50,7 +39,8 @@ public class ListActivity extends BaseActivity implements GraphI {
                 Intent in = new Intent(getApplicationContext(), ResultActivity.class);
                 Graph g = list.get(i);
 
-                in.putExtra(GRAPH_RESULT, g.getState());
+                in.putExtra(GRAPH_RESULT, g.getResult());
+                in.putExtra(GRAPH_DATA, g.getData());
                 in.putExtra(GRAPH_CONFIG, g.getConfig());
 
                 startActivity(in);
@@ -64,17 +54,20 @@ public class ListActivity extends BaseActivity implements GraphI {
                 list = repo.getAll();
 
                 ItemAdapter ia = new ItemAdapter(thisObject, list);
+//                ArrayAdapter adapter = new ArrayAdapter(thisObject, R.layout.activity_listdetail, list);
+//                ArrayAdapter ia = new ArrayAdapter(R.layout.activity_listdetail, list);
                 listView.setAdapter(ia);
             }
         });
 
-        final Button deleteBtn = findViewById(R.id.deleteBtn);
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Graph g = list.get(i);
-                GraphRepo repo = new GraphRepo(getApplicationContext());
-            }
-        });
+//        final Button deleteBtn = findViewById(R.id.deleteBtn);
+//        deleteBtn.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                GraphWrapper.log("delete button");
+////                Graph g = list.get(i);
+////                GraphRepo repo = new GraphRepo(getApplicationContext());
+//            }
+//        });
 
 
     }

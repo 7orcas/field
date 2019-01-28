@@ -3,10 +3,11 @@ package com.sevenorcas.field.graph.wrapper;
 public interface GraphI {
     String GRAPH_STATE          = "com.sevenorcas.field.graphstate";
     String GRAPH_RESULT         = "com.sevenorcas.field.graphresult";
+    String GRAPH_DATA           = "com.sevenorcas.field.graphdata";
     String GRAPH_CONFIG         = "com.sevenorcas.field.graphconfig";
 
     String DELIMIT_1            = ",";
-    String DELIMIT_2            = "  =";
+    String DELIMIT_2            = "=";
     String DELIMIT_3            = "|";
 
     String STATE_MAX            = "mx";

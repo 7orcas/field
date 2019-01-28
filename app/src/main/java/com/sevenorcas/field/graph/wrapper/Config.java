@@ -93,16 +93,12 @@ public class Config extends Base{
         encodeField(CONFIG_MAX_Y, maxY, sb);
         encodeField(CONFIG_MIN_X, minX, sb);
         encodeField(CONFIG_DESCRIPTION, descr, sb);
-
-        Wrapper.log("config encode: " + sb.toString());
-
         return sb.toString();
     }
 
     public void decode(String s){
 
         if (s == null || s.isEmpty()){
-            Wrapper.log("decode: " + (s == null?"null" : "empty"));
             return;
         }
 
@@ -117,17 +113,39 @@ public class Config extends Base{
             descr       = getField(CONFIG_DESCRIPTION, descr);
 
         } catch (Exception x){
-            Wrapper.log("Exception: " + x.getMessage());
+            GraphWrapper.log("Exception: " + x.getMessage());
         }
-        Wrapper.log("config decode: " + toStringX());
     }
 
     public String getDescription() {
         return descr;
     }
-
     public void setDescription(String descr) {
         this.descr = descr;
+    }
+
+    public int getRngPerRun() {
+        return rngPerRun;
+    }
+
+    public int getDelayMS() {
+        return delayMS;
+    }
+
+    public int getDelayFactor() {
+        return delayFactor;
+    }
+
+    public double getMinY() {
+        return minY;
+    }
+
+    public double getMaxY() {
+        return maxY;
+    }
+
+    public double getMinX() {
+        return minX;
     }
 }
 

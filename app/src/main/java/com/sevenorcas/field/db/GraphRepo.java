@@ -1,7 +1,9 @@
 package com.sevenorcas.field.db;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -16,8 +18,12 @@ public class GraphRepo implements DbI {
     private AppDatabase appDatabase;
 
     public GraphRepo(Context context) {
-        appDatabase = Room.databaseBuilder(context, AppDatabase.class, DB_NAME).build();
+        appDatabase = Room.databaseBuilder(context, AppDatabase.class, DB_NAME)
+                .fallbackToDestructiveMigration()
+                //.addMigrations(MIGRATION_1_2)
+                .build();
     }
+
 
     public Long nextId(){
         Long id = appDatabase.graphDao().maxId();
@@ -33,7 +39,8 @@ public class GraphRepo implements DbI {
 //        graph.setId(nextId());
         graph.setCreated(new Date());
         graph.setConfig(config.encode());
-        graph.setState(state.encode());
+        graph.setResult(state.encodeResult());
+        graph.setData(state.encodeData());
         graph.setDescr(descr);
         graph.setParticipants(participants);
         graph.setMinY(state.getMinY());
