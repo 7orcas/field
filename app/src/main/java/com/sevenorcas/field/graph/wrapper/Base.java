@@ -28,9 +28,11 @@ public class Base implements GraphI {
         String[] sx = encoding.split(DELIMIT_1);
         for (int i=0; i<sx.length; i++){
             String[] sx1 = sx[i].split(DELIMIT_2);
-            String k = sx1[0];
-            String v = sx1[1];
-            fields.put(k,v);
+            if (sx1.length>1) {
+                String k = sx1[0];
+                String v = sx1[1];
+                fields.put(k, v);
+            }
         }
     }
 

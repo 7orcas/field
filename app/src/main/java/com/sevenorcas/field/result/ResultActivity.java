@@ -29,16 +29,17 @@ public class ResultActivity extends BaseActivity implements GraphI {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        final Config config = new Config();
-        config.decode((String)getIntent().getSerializableExtra(GRAPH_CONFIG));
+        final Config config = new Config((String)getIntent().getSerializableExtra(GRAPH_CONFIG));
 
         GraphWrapper wrapper = new GraphWrapper(config);
         wrapper.deserialize((String)getIntent().getSerializableExtra(GRAPH_RESULT), (String)getIntent().getSerializableExtra(GRAPH_DATA));
         final State state = wrapper.getState();
-        wrapper.createGraph(this).addSeries(state.addAllDataPoints());
+        wrapper.createGraph(this, state.getLastX()).addSeries(state.addAllDataPoints());
+
+        final Long graphId = (Long)getIntent().getSerializableExtra(GRAPH_ID);
 
         setLabel(R.id.descrTxt, R.string.descr);
-        setLabel(R.id.descrTxtV, "" + config.getDescription());
+        setEditText(R.id.descrTxtV, "" + config.getDescription());
 
         setLabel(R.id.frequencyTxt, R.string.frequency);
         setLabel(R.id.frequencyTxtV, "" + config.getFrequencyAsString(this));
@@ -62,7 +63,12 @@ public class ResultActivity extends BaseActivity implements GraphI {
                 config.setDescription(descr);
 
                 GraphRepo repo = new GraphRepo(getApplicationContext());
-                repo.insert(config, state, descr, 1);
+                if (graphId == null){
+                    repo.insert(config, state, descr, 1);
+                }
+                else{
+                    repo.update(graphId, descr);
+                }
 
                 startActivity(new Intent(ResultActivity.this, MainActivity.class));
             }

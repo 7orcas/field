@@ -1,6 +1,7 @@
 package com.sevenorcas.field;
 
 import android.app.Activity;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class BaseActivity extends Activity {
@@ -15,6 +16,11 @@ public class BaseActivity extends Activity {
         TextView txt = findViewById(id);
         txt.setText(sting);
         txt.setFocusable(false);
+    }
+
+    protected void setEditText(int id, String sting){
+        EditText txt = findViewById(id);
+        txt.setText(sting);
     }
 
     protected String formatTime (int seconds){

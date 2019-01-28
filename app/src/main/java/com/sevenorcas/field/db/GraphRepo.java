@@ -36,7 +36,6 @@ public class GraphRepo implements DbI {
                        String descr,
                        int participants){
         Graph graph = new Graph();
-//        graph.setId(nextId());
         graph.setCreated(new Date());
         graph.setConfig(config.encode());
         graph.setResult(state.encodeResult());
@@ -53,6 +52,16 @@ public class GraphRepo implements DbI {
             @Override
             protected Void doInBackground(Void... voids) {
                 appDatabase.graphDao().insert(graph);
+                return null;
+            }
+        }.execute();
+    }
+
+    public void update(final Long id, final String descr){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                appDatabase.graphDao().update(id, descr);
                 return null;
             }
         }.execute();

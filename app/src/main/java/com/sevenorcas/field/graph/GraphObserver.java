@@ -8,6 +8,8 @@ import android.content.Context;
 
 import com.sevenorcas.field.graph.wrapper.GraphWrapper;
 
+import java.sql.Wrapper;
+
 import static android.arch.lifecycle.Lifecycle.Event.*;
 
 public class GraphObserver implements LifecycleObserver {
@@ -22,6 +24,11 @@ public class GraphObserver implements LifecycleObserver {
 
     @OnLifecycleEvent(ON_RESUME)
     public void onResumeListener() {
-        wrapper.runTrials();
+        if (wrapper.isRunning()){
+            wrapper.appendAllDataPoints();
+        }
+        else {
+            wrapper.runTrials();
+        }
     }
 }

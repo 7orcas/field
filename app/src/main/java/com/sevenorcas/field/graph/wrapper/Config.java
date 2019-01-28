@@ -20,6 +20,15 @@ public class Config extends Base{
 
 
     public Config() {
+        initialise();
+    }
+
+    public Config(String encoding) {
+        initialise();
+        decode(encoding);
+    }
+
+    private void initialise(){
         rngPerRun = 1000;
         delayFactor = 30;
         set30Seconds();
@@ -29,6 +38,7 @@ public class Config extends Base{
         minX = 1;
         descr = "";
     }
+
 
     public Config setSeconds(){ return setTime(1); }
     public boolean isSeconds(){ return isTime(1); }
@@ -86,6 +96,7 @@ public class Config extends Base{
      */
     public String encode(){
         StringBuffer sb = new StringBuffer();
+        encodeField(CONFIG_VERSION, 1, sb);
         encodeField(CONFIG_RNG_PER_RUN, rngPerRun, sb);
         encodeField(CONFIG_DEPLAY_MS, delayMS, sb);
         encodeField(CONFIG_DEPLAY_FACTOR, delayFactor, sb);

@@ -22,6 +22,9 @@ public interface GraphDao {
     @Query("SELECT id FROM graph ORDER BY id DESC LIMIT 1")
     Long maxId();
 
+    @Query("UPDATE graph SET descr = :descr WHERE id = :id")
+    void update(Long id, String descr);
+
     @Insert
     void insert(Graph graph);
 

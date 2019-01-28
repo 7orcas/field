@@ -38,6 +38,7 @@ public class State extends Base implements GraphI {
     public String encodeResult(){
         StringBuffer sb = new StringBuffer();
 
+        encodeField(STATE_VERSION, 1, sb);
         encodeField(STATE_MAX, maxX, sb);
         encodeField(STATE_LAST, lastX, sb);
         encodeField(STATE_MIN_Y, minY, sb);
@@ -57,6 +58,7 @@ public class State extends Base implements GraphI {
         }
 
         StringBuffer sb = new StringBuffer();
+        encodeField(STATE_VERSION, 1, sb);
         encodeField(STATE_DATA_POINTS, sbx.toString(), sb);
 
         return sb.toString();
@@ -117,11 +119,13 @@ public class State extends Base implements GraphI {
     }
 
 
-    public void appendAllDataPoints(){
+    public LineGraphSeries<DataPoint> appendAllDataPoints(){
+        series = new LineGraphSeries<>();
         for (int i=0; i<dataPoints.size(); i++){
             DataPoint dp = dataPoints.get(i);
             series.appendData(dp, i > maxX, maxX);
         }
+        return series;
     }
 
     public LineGraphSeries<DataPoint> addAllDataPoints(){

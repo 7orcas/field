@@ -33,7 +33,7 @@ public class GraphActivity extends AppCompatActivity implements GraphI {
         GraphObserver graphObserver = new GraphObserver(this, getLifecycle(), wrapper);
         getLifecycle().addObserver(graphObserver);
 
-        wrapper.createGraph(this)
+        wrapper.createGraph(this, -1)
                .addSeries(wrapper.getSeries());
 
 

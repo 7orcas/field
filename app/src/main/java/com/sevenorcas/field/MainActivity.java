@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 
 import com.sevenorcas.field.graph.GraphActivity;
-import com.sevenorcas.field.list.ListActivityX;
+import com.sevenorcas.field.list.ListActivity;
 
 /**
  *
@@ -39,6 +39,9 @@ import com.sevenorcas.field.list.ListActivityX;
  *
  *           Observers
  *           https://medium.com/@MinaSamy/android-architecture-components-lifecycle-433ace1ec05d
+ *
+ *           Lists
+ *           http://www.vogella.com/tutorials/AndroidListView/article.html
  *
  *           https://sourceforge.net/projects/jrandtest/ ????
  *           https://github.com/stamfest/randomtests ????
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
-            startActivity(new Intent(MainActivity.this, ListActivityX.class));
+            startActivity(new Intent(MainActivity.this, ListActivity.class));
             return true;
         }
 

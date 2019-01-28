@@ -15,6 +15,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.sevenorcas.field.R;
 import com.sevenorcas.field.graph.GraphActivity;
+import com.sevenorcas.field.graph.GraphObserver;
 import com.sevenorcas.field.result.ResultActivity;
 
 import java.net.URL;
@@ -29,6 +30,8 @@ public class GraphWrapper implements GraphI {
     private Config config;
     private boolean stop;
     private boolean running;
+    private GraphView graphView;
+    private GraphObserver observer;
 
     /**
      * Graph wrapper with data and methods
@@ -55,6 +58,13 @@ public class GraphWrapper implements GraphI {
         return state;
     }
 
+    /**
+     * Are the Random Number trails already running?
+     * @return
+     */
+    public boolean isRunning() {
+        return running;
+    }
 
     /**
      * Trial Run of Random Numbers
@@ -131,7 +141,11 @@ public class GraphWrapper implements GraphI {
         state.addDataPoint(dp);
     }
 
-    public GraphView createGraph(Activity activity){
+    public void appendAllDataPoints(){
+        graphView.addSeries(state.appendAllDataPoints());
+    }
+
+    public GraphView createGraph(Activity activity, int max){
 
         if (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             state.setMaxX(60);
@@ -146,16 +160,18 @@ public class GraphWrapper implements GraphI {
         vp.setMinY(config.getMinY());
         vp.setMaxY(config.getMaxY());
         vp.setMinX(config.getMinX());
-        vp.setMaxX(state.getMaxX());
+        vp.setMaxX(max != -1? max : state.getMaxX());
         vp.setScrollable(true);
 
         // customize y axis grid
         GridLabelRenderer r = g.getGridLabelRenderer();
         r.setNumVerticalLabels(5);
+        r.setNumHorizontalLabels(5);
+        r.setPadding(48);
         r.setVerticalAxisTitle(activity.getResources().getString(R.string.axis_y_label));
         r.setHorizontalAxisTitle(activity.getResources().getString(R.string.axis_x_label));
 
-        r.setPadding(48);
+        graphView = g;
 
         return g;
     }
