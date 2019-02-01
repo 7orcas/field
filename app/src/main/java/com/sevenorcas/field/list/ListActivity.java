@@ -39,6 +39,7 @@ public class ListActivity extends AppCompatActivity implements GraphI {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        //TODO: Swipe right to delete
         mDetector = new GestureDetectorCompat(this, new GestureListener());
 
         Toolbar tb = findViewById(R.id.app_toolbar);

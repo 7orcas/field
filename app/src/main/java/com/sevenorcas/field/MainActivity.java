@@ -42,6 +42,10 @@ import com.sevenorcas.field.list.ListActivity;
  *
  *           Lists
  *           http://www.vogella.com/tutorials/AndroidListView/article.html
+ *           https://demonuts.com/android-listview-swipe-delete/
+ *
+ *           WakeLock
+ *           https://stackoverflow.com/questions/4870667/how-can-i-use-getsystemservice-in-a-non-activity-class-locationmanager
  *
  *           https://sourceforge.net/projects/jrandtest/ ????
  *           https://github.com/stamfest/randomtests ????
@@ -54,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //TODO: Search crashes if no records
 
         Toolbar tb = findViewById(R.id.app_toolbar);
         setSupportActionBar(tb);

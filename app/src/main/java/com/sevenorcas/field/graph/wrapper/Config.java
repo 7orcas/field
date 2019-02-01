@@ -33,8 +33,8 @@ public class Config extends Base{
         delayFactor = 30;
         set30Seconds();
 
-        minY = 0.4;
-        maxY = 0.6;
+        minY = 0.3;
+        maxY = 0.7;
         minX = 1;
         descr = "";
     }

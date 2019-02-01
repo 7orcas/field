@@ -10,7 +10,7 @@ public class GraphModel extends ViewModel {
     private GraphWrapper wrapper;
 
     public GraphModel() {
-        Config config = new Config().setSeconds();
+        Config config = new Config().set10Seconds();
         wrapper = new GraphWrapper(config);
     }
 

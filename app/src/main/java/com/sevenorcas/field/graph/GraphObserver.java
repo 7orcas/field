@@ -14,10 +14,12 @@ import static android.arch.lifecycle.Lifecycle.Event.*;
 
 public class GraphObserver implements LifecycleObserver {
 
+    private Context context;
     private Lifecycle lifecycle;
     private GraphWrapper wrapper;
 
     public GraphObserver(Context context, Lifecycle lifecycle, GraphWrapper wrapper) {
+        this.context = context;
         this.lifecycle = lifecycle;
         this.wrapper = wrapper;
     }
@@ -28,7 +30,7 @@ public class GraphObserver implements LifecycleObserver {
             wrapper.appendAllDataPoints();
         }
         else {
-            wrapper.runTrials();
+            wrapper.runTrials(context);
         }
     }
 }

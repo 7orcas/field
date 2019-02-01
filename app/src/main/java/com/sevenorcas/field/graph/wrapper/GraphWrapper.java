@@ -1,12 +1,14 @@
 package com.sevenorcas.field.graph.wrapper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.PrecomputedText;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
@@ -14,12 +16,11 @@ import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.sevenorcas.field.R;
-import com.sevenorcas.field.graph.GraphActivity;
 import com.sevenorcas.field.graph.GraphObserver;
-import com.sevenorcas.field.result.ResultActivity;
 
-import java.net.URL;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static android.content.Context.POWER_SERVICE;
 
 /**
  * <i>GraphModel</i> wrapper with <b>this</b> app's settings
@@ -32,6 +33,7 @@ public class GraphWrapper implements GraphI {
     private boolean running;
     private GraphView graphView;
     private GraphObserver observer;
+    private WakeLock wakeLock;
 
     /**
      * Graph wrapper with data and methods
@@ -69,13 +71,20 @@ public class GraphWrapper implements GraphI {
     /**
      * Trial Run of Random Numbers
      */
-    public void runTrials() {
+    public void runTrials(Context context) {
 
         if (running || isStop()){
             return;
         }
         running = true;
-        log("start runTrails");
+        log("start runTrails, adding wakelock");
+
+        if (wakeLock == null) {
+            PowerManager powerManager = (PowerManager) context.getSystemService(POWER_SERVICE);
+            wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                    "MyApp::MyWakelockTag");
+            wakeLock.acquire();
+        }
 
         new RunTrialsX().execute();
     }
@@ -190,6 +199,10 @@ public class GraphWrapper implements GraphI {
      */
     public void stop() {
         stop = true;
+        if (wakeLock != null) {
+            wakeLock.release();
+            wakeLock = null;
+        }
     }
 
     static public void log(String m){
